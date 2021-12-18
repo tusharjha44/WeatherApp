@@ -1,6 +1,5 @@
 package com.example.weatherapiapp.models
 
-import com.weatherapp.models.*
 import java.io.Serializable
 
 data class WeatherResponse(
