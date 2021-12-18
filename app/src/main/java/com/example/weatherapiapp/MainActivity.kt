@@ -2,6 +2,7 @@ package com.example.weatherapiapp
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.app.Dialog
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
@@ -31,7 +32,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 class MainActivity : AppCompatActivity() {
 
     private lateinit var mFusedLocationClient: FusedLocationProviderClient
-//    private var mProgressDialog: Dialog? = null
+    private var mProgressDialog: Dialog? = null
     private var mLatitude: Double = 0.0
     private var mLongitude: Double = 0.0
 //    private lateinit var mSharedPreferences: SharedPreferences
@@ -157,12 +158,15 @@ class MainActivity : AppCompatActivity() {
                 latitude,longitude,Constants.METRIC_UNIT,Constants.APP_ID
             )
 
+            showCustomProgressDialog()
+
             listCall.enqueue(object : Callback<WeatherResponse>{
                 override fun onResponse(
                     call: Call<WeatherResponse>,
                     response: Response<WeatherResponse>
                 ) {
                     if(response.isSuccessful){
+                        hideProgressDialog()
                         val weatherList: WeatherResponse? = response.body()
                         Log.i("Response Result","$weatherList")
 
@@ -183,6 +187,7 @@ class MainActivity : AppCompatActivity() {
 
                 override fun onFailure(call: Call<WeatherResponse>, t: Throwable) {
                     Log.e("Erroorr", t.message.toString())
+                    hideProgressDialog()
                 }
 
             })
@@ -194,5 +199,16 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun showCustomProgressDialog() {
+        mProgressDialog = Dialog(this)
+        mProgressDialog!!.setContentView(R.layout.dialog_custom_progress)
+        mProgressDialog!!.show()
+    }
+
+    private fun hideProgressDialog() {
+        if (mProgressDialog != null) {
+            mProgressDialog!!.dismiss()
+        }
+    }
 
 }
