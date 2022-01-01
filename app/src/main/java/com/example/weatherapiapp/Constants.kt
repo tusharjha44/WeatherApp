@@ -1,16 +1,14 @@
 package com.example.weatherapiapp
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
-import androidx.annotation.StringRes
 
 object Constants {
 
     const val APP_ID: String = "0afcadab99bcb3a8cbe67e052747628b"
-    const val BASE_URL: String = "http://api.openweathermap.org/data/"
+    const val BASE_URL: String = "https://api.openweathermap.org/data/"
     const val METRIC_UNIT: String = "metric"
 
     fun isNetworkAvailable(context: Context): Boolean {
